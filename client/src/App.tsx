@@ -7,6 +7,8 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Resources from "./pages/Resources";
+import InfographicsList from "./pages/InfographicsList";
+import InfographicPage from "./pages/InfographicPage";
 
 function Router() {
   return (
@@ -14,6 +16,8 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/contact"} component={Contact} />
       <Route path={"/resources"} component={Resources} />
+      <Route path={"/infographics"} component={InfographicsList} />
+      <Route path={"/infographics/:slug"} component={InfographicPage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
