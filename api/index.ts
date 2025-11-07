@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { createServer } from "http";
+
 import path from "path";
 import { fileURLToPath } from "url";
 import nodemailer from "nodemailer";
@@ -31,9 +31,7 @@ const transporter = nodemailer.createTransport({
 //   },
 // });
 
-async function startServer() {
-  const app = express();
-  const server = createServer(app);
+const app = express();
 
   // Middleware
   app.use(cors());
@@ -271,13 +269,6 @@ async function startServer() {
     res.sendFile(path.join(staticPath, "index.html"));
   });
 
-  const port = process.env.PORT || 3000;
-
-  server.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}/`);
-    console.log(`Contact form API available at http://localhost:${port}/api/contact`);
-  });
-}
-
-// startServer().catch(console.error);
-module.exports = app;
+// The server is not started here for Vercel serverless environment.
+// Vercel expects the Express app to be exported.
+export default app;
