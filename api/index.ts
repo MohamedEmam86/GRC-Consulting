@@ -264,11 +264,6 @@ const app = express();
     res.json({ status: "ok", timestamp: new Date().toISOString() });
   });
 
-  // Handle client-side routing - serve index.html for all routes
-  app.get("/*", (_req: Request, res: Response) => {
-    res.sendFile(path.join(staticPath, "index.html"));
-  });
-
-// The server is not started here for Vercel serverless environment.
+// The server is not started here for Vercel serverless environment..
 // Vercel expects the Express app to be exported.
 export default app;
