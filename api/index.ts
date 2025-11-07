@@ -55,6 +55,7 @@ const app = express();
         fullName,
         companyName,
         email,
+        country, // New field
         phone,
         industry,
         jobTitle,
@@ -119,15 +120,22 @@ const app = express();
                 
                 <div class="field">
                   <div class="label">Email:</div>
-                  <div class="value"><a href="mailto:${email}">${email}</a></div>
-                </div>
-                
-                ${phone ? `
-                <div class="field">
-                  <div class="label">Phone:</div>
-                  <div class="value">${phone}</div>
-                </div>
-                ` : ''}
+	                  <div class="value"><a href="mailto:${email}">${email}</a></div>
+	                </div>
+	                
+	                ${country ? `
+	                <div class="field">
+	                  <div class="label">Country:</div>
+	                  <div class="value">${country}</div>
+	                </div>
+	                ` : ''}
+	                
+	                ${phone ? `
+	                <div class="field">
+	                  <div class="label">Phone:</div>
+	                  <div class="value">${phone}</div>
+	                </div>
+	                ` : ''}
                 
                 ${industry ? `
                 <div class="field">
