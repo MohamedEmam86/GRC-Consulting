@@ -11,6 +11,7 @@ export default function Contact() {
     industry: '',
     jobTitle: '',
     email: '',
+    country: '', // New field for country
     phone: '',
     location: '',
     services: [] as string[],
@@ -79,6 +80,7 @@ export default function Contact() {
           industry: '',
           jobTitle: '',
           email: '',
+          country: '', // New field for country
           phone: '',
           location: '',
           services: [],
@@ -244,6 +246,21 @@ export default function Contact() {
                   placeholder="your@email.com"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Country</label>
+                <input
+                  type="text"
+                  name="country"
+                  value={formData.country}
+                  onChange={handleFormChange}
+                  className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 transition-colors"
+                  placeholder="e.g., United States"
+                />
+              </div>
+            </div>
+
+            {/* Phone */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">Phone</label>
                 <input
