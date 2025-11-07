@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, ArrowRight, FileText, ChevronLeft, ChevronRight, Globe, Shield, TrendingUp } from 'lucide-react';
 import { useState } from 'react';
@@ -108,6 +109,9 @@ export default function Resources() {
       ]
     }
   ];
+
+  // compute the active category icon component (safe with optional chaining)
+  const ActiveIcon = complianceResources[activeComplianceCategory]?.icon ?? null;
 
   const nextInfographic = () => {
     setCurrentInfographicIndex((prev) => (prev + 1) % infographics.length);
@@ -391,19 +395,17 @@ export default function Resources() {
             >
               <div className="bg-gradient-to-br from-slate-800 to-slate-700 rounded-2xl p-8 md:p-12 border border-slate-600/50">
                 <div className="flex items-start gap-4 mb-8">
-                  {complianceResources[activeComplianceCategory].icon && (
+                  {ActiveIcon && (
                     <div className="p-4 bg-gradient-to-br from-purple-500/20 to-cyan-500/20 rounded-lg">
-                      {complianceResources[activeComplianceCategory].icon && 
-                        <complianceResources[activeComplianceCategory].icon size={32} className="text-cyan-400" />
-                      }
+                      <ActiveIcon size={32} className="text-cyan-400" />
                     </div>
                   )}
                   <div>
                     <h3 className="text-3xl font-bold text-white mb-2">
-                      {complianceResources[activeComplianceCategory].category}
+                      {complianceResources[activeComplianceCategory]?.category}
                     </h3>
                     <p className="text-gray-300 text-lg">
-                      {complianceResources[activeComplianceCategory].description}
+                      {complianceResources[activeComplianceCategory]?.description}
                     </p>
                   </div>
                 </div>
@@ -415,7 +417,7 @@ export default function Resources() {
                   initial="hidden"
                   animate="visible"
                 >
-                  {complianceResources[activeComplianceCategory].resources.map((resource, resourceIndex) => (
+                  {complianceResources[activeComplianceCategory]?.resources.map((resource, resourceIndex) => (
                     <motion.a
                       key={resourceIndex}
                       href={resource.url}
@@ -439,7 +441,7 @@ export default function Resources() {
                         </div>
                       </div>
                     </motion.a>
-                  ))}
+                  )) || null}
                 </motion.div>
               </div>
             </motion.div>
@@ -459,34 +461,37 @@ export default function Resources() {
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                {complianceResources.map((section, sectionIndex) => (
-                  <motion.button
-                    key={sectionIndex}
-                    onClick={() => setActiveComplianceCategory(sectionIndex)}
-                    variants={itemVariants}
-                    className="group text-left"
-                  >
-                    <div className="bg-gradient-to-br from-slate-800 to-slate-700 p-8 rounded-xl border border-slate-600/50 hover:border-purple-400/50 transition-all duration-300 h-full hover:shadow-lg hover:shadow-purple-500/20">
-                      <div className="flex items-start gap-4 mb-4">
-                        {section.icon && (
-                          <div className="p-3 bg-gradient-to-br from-purple-500/20 to-cyan-500/20 rounded-lg group-hover:from-purple-500/40 group-hover:to-cyan-500/40 transition-all">
-                            <section.icon size={24} className="text-cyan-400" />
-                          </div>
-                        )}
+                {complianceResources.map((section, sectionIndex) => {
+                  const SectionIcon = section.icon ?? null;
+                  return (
+                    <motion.button
+                      key={sectionIndex}
+                      onClick={() => setActiveComplianceCategory(sectionIndex)}
+                      variants={itemVariants}
+                      className="group text-left"
+                    >
+                      <div className="bg-gradient-to-br from-slate-800 to-slate-700 p-8 rounded-xl border border-slate-600/50 hover:border-purple-400/50 transition-all duration-300 h-full hover:shadow-lg hover:shadow-purple-500/20">
+                        <div className="flex items-start gap-4 mb-4">
+                          {SectionIcon && (
+                            <div className="p-3 bg-gradient-to-br from-purple-500/20 to-cyan-500/20 rounded-lg group-hover:from-purple-500/40 group-hover:to-cyan-500/40 transition-all">
+                              <SectionIcon size={24} className="text-cyan-400" />
+                            </div>
+                          )}
+                        </div>
+                        <h4 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
+                          {section.category}
+                        </h4>
+                        <p className="text-gray-400 text-sm mb-4">
+                          {section.resources.length} resources
+                        </p>
+                        <div className="flex items-center gap-2 text-purple-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all">
+                          <span className="font-semibold text-sm">Explore</span>
+                          <ArrowRight size={16} />
+                        </div>
                       </div>
-                      <h4 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                        {section.category}
-                      </h4>
-                      <p className="text-gray-400 text-sm mb-4">
-                        {section.resources.length} resources
-                      </p>
-                      <div className="flex items-center gap-2 text-purple-400 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all">
-                        <span className="font-semibold text-sm">Explore</span>
-                        <ArrowRight size={16} />
-                      </div>
-                    </div>
-                  </motion.button>
-                ))}
+                    </motion.button>
+                  );
+                })}
               </motion.div>
             </motion.div>
           </div>
