@@ -1,10 +1,9 @@
-import { Link } from 'wouter';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Menu, X, Home as HomeIcon } from 'lucide-react';
-import { Link } from 'wouter';
 import { useState } from 'react';
-
-// Define the structure for an infographic item
+	
+	// Define the structure for an infographic item
 interface Infographic {
   title: string;
   color: string;
