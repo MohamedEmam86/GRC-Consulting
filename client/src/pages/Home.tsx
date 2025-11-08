@@ -353,7 +353,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="text-6xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight mb-4"
           >
-            <span className="block">Reinventing</span>
+            <span className="block">Your Smart</span>
             <motion.span
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -362,7 +362,7 @@ export default function Home() {
             >
               Compliance
             </motion.span>
-            <span className="block">for Growth</span>
+            <span className="block">Solutions</span>
           </motion.div>
           <motion.p
             initial={{ opacity: 0 }}
@@ -376,14 +376,25 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 2.0 }}
-            className="mt-10"
+            className="mt-10 flex justify-center space-x-4"
           >
             <a
               href="#services"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-purple-600 hover:bg-purple-700 transition-colors shadow-lg hover:shadow-purple-500/50"
+              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-purple-600 hover:bg-purple-700 transition-colors shadow-lg hover:shadow-purple-500/50"
             >
-              See What We Do
-              <ArrowRight className="ml-3 h-5 w-5" />
+              See what we do
+            </a>
+            <a
+              href="#case-studies"
+              className="inline-flex items-center justify-center px-6 py-3 border border-2 border-white/50 text-base font-medium rounded-full text-white hover:bg-white/10 transition-colors shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              Real-World Examples
+            </a>
+            <a
+              href="#about"
+              className="inline-flex items-center justify-center px-6 py-3 border border-2 border-white/50 text-base font-medium rounded-full text-white hover:bg-white/10 transition-colors shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              Who we are
             </a>
           </motion.div>
         </div>
@@ -564,6 +575,21 @@ export default function Home() {
                 </motion.div>
               </motion.div>
             ))}
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="mt-12 text-center"
+          >
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center px-10 py-4 border border-transparent text-lg font-medium rounded-full text-white bg-cyan-600 hover:bg-cyan-700 transition-colors shadow-lg hover:shadow-cyan-500/50 transform hover:scale-105"
+            >
+              Request Services
+              <ArrowRight className="ml-3 h-6 w-6" />
+            </Link>
           </motion.div>
         </div>
       </section>
