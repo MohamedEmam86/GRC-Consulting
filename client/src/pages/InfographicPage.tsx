@@ -1,7 +1,10 @@
 import { Link, useRoute } from 'wouter';
-import { ArrowLeft, Home as HomeIcon } from 'lucide-react';
+import { ArrowLeft, Home as HomeIcon, Menu, X } from 'lucide-react';
+import { Link, useRoute } from 'wouter';
+import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 // Define the structure for an infographic item
 interface Infographic {
@@ -56,11 +59,12 @@ const infographicMap = infographicsData.reduce((acc, item) => {
 }, {} as Record<string, Infographic>);
 
 export default function InfographicPage() {
-  // Use wouter's useRoute to extract the slug from the URL
-  const [match, params] = useRoute('/infographics/:slug');
-  const slug = params?.slug;
-  const infographic = slug ? infographicMap[slug] : null;
-  const [loading, setLoading] = useState(true);
+	  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	  // Use wouter's useRoute to extract the slug from the URL
+	  const [match, params] = useRoute('/infographics/:slug');
+	  const slug = params?.slug;
+	  const infographic = slug ? infographicMap[slug] : null;
+	  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Simulate loading time for the iframe content
@@ -81,22 +85,69 @@ export default function InfographicPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white pt-20 pb-12 px-4 sm:px-6 lg:px-8">
+	    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
+	      {/* Navigation - Copied from Home.tsx */}
+	      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50">
+	        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+	          <div className="flex justify-between items-center h-16">
+	            <motion.div
+	              initial={{ opacity: 0, x: -20 }}
+	              animate={{ opacity: 1, x: 0 }}
+	              transition={{ duration: 0.5 }}
+	              className="flex items-center space-x-2"
+	            >
+	              <img src="/youtube-logo.jpg" alt="YouTube Channel Logo" className="w-10 h-10 rounded-full object-cover" />
+	              <span className="font-bold text-xl hidden sm:inline">Compliance Excellence</span>
+	            </motion.div>
+	
+	            {/* Desktop Menu */}
+	            <div className="hidden md:flex items-center space-x-8">
+	              <Link href="/" className="hover:text-purple-400 transition-colors flex items-center gap-2">
+	                <HomeIcon size={18} /> Back to Home
+	              </Link>
+	              <Link href="/infographics" className="hover:text-purple-400 transition-colors flex items-center gap-2">
+	                <ArrowLeft size={18} /> Back to List
+	              </Link>
+	            </div>
+	
+	            {/* Mobile Menu Button */}
+	            <button
+	              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+	              className="md:hidden p-2 hover:bg-slate-700 rounded-lg transition-colors"
+	            >
+	              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+	            </button>
+	          </div>
+	
+	          {/* Mobile Menu */}
+	          <AnimatePresence>
+	            {mobileMenuOpen && (
+	              <motion.div
+	                initial={{ opacity: 0, height: 0 }}
+	                animate={{ opacity: 1, height: 'auto' }}
+	                exit={{ opacity: 0, height: 0 }}
+	                className="md:hidden pb-4 space-y-2"
+	              >
+	                <Link href="/" className="block py-2 hover:text-purple-400 transition-colors flex items-center gap-2">
+	                  <HomeIcon size={18} /> Back to Home
+	                </Link>
+	                <Link href="/infographics" className="block py-2 hover:text-purple-400 transition-colors flex items-center gap-2">
+	                  <ArrowLeft size={18} /> Back to List
+	                </Link>
+	              </motion.div>
+	            )}
+	          </AnimatePresence>
+	        </div>
+	      </nav>
+	
+	      <div className="max-w-7xl mx-auto pt-20 pb-12 px-4 sm:px-6 lg:px-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="max-w-7xl mx-auto"
       >
-        {/* Navigation Bar */}
-        <div className="flex justify-between items-center mb-8 p-4 bg-slate-800 rounded-xl shadow-lg">
-          <Link href="/infographics" className="text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-2 font-semibold">
-            <ArrowLeft size={20} /> Back to Infographics List
-          </Link>
-          <Link href="/" className="text-purple-400 hover:text-purple-300 transition-colors flex items-center gap-2 font-semibold">
-            <HomeIcon size={20} /> Home
-          </Link>
-        </div>
+
 
         <h1 className={`text-4xl md:text-5xl font-bold mb-8 text-center bg-gradient-to-r from-${infographic.color}-400 to-cyan-400 bg-clip-text text-transparent`}>
           {infographic.title}
@@ -123,7 +174,9 @@ export default function InfographicPage() {
             ></iframe>
           )}
         </motion.div>
-      </motion.div>
-    </div>
+	      </motion.div>
+	    </div>
+	  );
+	}
   );
 }
